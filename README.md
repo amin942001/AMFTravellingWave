@@ -179,24 +179,44 @@ To have access to a path:
 Always import from the util.sys
 
 # Presentation of the repository
+##ml
+Contains code related to width extraction that is not relevant 
+to this article but which dependencies are necessary for proper import statements.
 
-##p
-## Tests
+##pipeline
+###control
+Contains a notebook that displays the typical workflow 
+for analysis of a plate.
+Dropbox linking and supercomputing facilities are necessary
+for proper functioning.
+###functions
+Contains all functions used for processing of fungal network
+graphs (`image_processing`) as well as functions used for 
+datatable creation that contains plate and hypha level observables (`post_processing`).
 
-### 1/ Generality
-The tests are all in the `test` folder.
-The python module chosen for tests is `unittest`.
-https://docs.python.org/3/library/unittest.html
+###launching
+Contains necessary code for running massive dataset on 
+Dutch supercomputer Snellius. Script launcher show typical parameters
+used for the analysis of growing AMF fungal networks.
 
-All test files must start with `test`. All test function and classes must start with `test`.
+###scripts
+Contains the scripts launched sequentially by the script launchers.
+These scripts make use of the functions defined in `functions`
 
-**Ex**: `test_sys_util.py`
+##transfer
+Contains the script necessary for transferring data to and from dropbox.
+This is specific to the data management of the project but some 
+dependencies are necessary for proper functioning of import statements.
 
-And all testing classes must be subclass from the unittest base test class and must start with Test.
+##util
+Contains useful functions to the whole repository.
 
-The file **helper.py** contains utils for testing: mock object, skipping functions, ..
+##test
 
-### 2/ Launching tests
+
+
+
+### Launching tests
 Tests can be launched with the following command:
 ```
 python3 -m unittest discover . "test*.py"
@@ -212,9 +232,10 @@ Test can also be run with `pytest` if installed (prettier display)
 pytest test_file.py -k test_function
 ```
 
-### 3/ Special tests
-For some tests, a processed Prince plate is required. Or other types of files.
-The data file must be stored at the following path:
+### Special tests
+For some tests, a processed plate is required. Or other types of files.
+Such test data can be downloaded at 10.6084/m9.figshare.23902032 .
+The data folders must be stored at the following path:
 **storage_path** + "**test**".
 If the data is not present, the tests will be skipped.
 The tests can be safely run even if to test/ directory is present.
@@ -224,7 +245,7 @@ These files don't accumulate (they are just replace at each test).
 
 
 
-## Coordinates
+##Note on coordinates
 
 The general choice of coordinates is:
 x -> for the small vertical axis (3000 for prince images)
