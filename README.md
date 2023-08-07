@@ -179,39 +179,39 @@ To have access to a path:
 Always import from the util.sys
 
 # Presentation of the repository
-##ml
+## ml
 Contains code related to width extraction that is not relevant 
 to this article but which dependencies are necessary for proper import statements.
 
-##pipeline
-###control
+## pipeline
+### control
 Contains a notebook that displays the typical workflow 
 for analysis of a plate.
 Dropbox linking and supercomputing facilities are necessary
 for proper functioning.
-###functions
+### functions
 Contains all functions used for processing of fungal network
 graphs (`image_processing`) as well as functions used for 
 datatable creation that contains plate and hypha level observables (`post_processing`).
 
-###launching
+### launching
 Contains necessary code for running massive dataset on 
 Dutch supercomputer Snellius. Script launcher show typical parameters
 used for the analysis of growing AMF fungal networks.
 
-###scripts
+### scripts
 Contains the scripts launched sequentially by the script launchers.
 These scripts make use of the functions defined in `functions`
 
-##transfer
+## transfer
 Contains the script necessary for transferring data to and from dropbox.
 This is specific to the data management of the project but some 
 dependencies are necessary for proper functioning of import statements.
 
-##util
+## util
 Contains useful functions to the whole repository.
 
-##test
+## test
 
 
 
