@@ -99,7 +99,7 @@ Launching environment:
 source venv/bin/activate
 ```
 
-### Install requiered packages
+### Install required packages
 
 Activate the environnement before launching
 
@@ -135,7 +135,6 @@ For better display:
 `jupyter lab build`
 
 ### Install the package in editable mode
-Remove the *pyproject.toml* file (for poetry)
 
 To run from the base folder:
 (will run the setup.py script)
@@ -164,7 +163,7 @@ PASTIS_PATH=/home/ipausers/bisot/anis_filter/anifilters/bin/ani2D
 SLURM_PATH=/data/temp
 SLURM_PATH_transfer=/data/temp
 DROPBOX_PATH = C:\Users\coren\AMOLF-SHIMIZU Dropbox\DATA\PRINCE
-DROPBOX_PATH_ANALYSIS = C:\Users\coren\AMOLF-SHIMIZU Dropbox\DATA\PRINCE_ANALYSIS
+PATH_ANALYSIS = C:\Users\coren\AMOLF-SHIMIZU Dropbox\DATA\PRINCE_ANALYSIS
 CONDA_PATH = /home/cbisot/miniconda3/etc/profile.d/conda.sh
 
 APP_KEY=
@@ -177,6 +176,21 @@ USER_ID=
 
 To have access to a path: 
 Always import from the util.sys
+# Example notebook
+Example of code showing network manipulation is provided in `test_network.ipynb`. It requires 
+ test data that can be downloaded at 10.6084/m9.figshare.23902032 to run.
+The data folders must be stored at the following path:
+**storage_path** + "**test**".
+
+Example of code generating the panels of figure 2
+is provided in `test_analysis.ipynb`.
+It requires the datatable made available 
+[here](10.6084/m9.figshare.23902035).
+`PATH_ANALYSIS` 
+should be updated to povide the path to the 
+root folder where this data can be unzipped.
+
+
 
 # Presentation of the repository
 ## ml
