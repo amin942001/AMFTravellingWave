@@ -1,89 +1,20 @@
 # AMF segmentation and analysis
 AMF segmentation
 
+# System requirements
+
+## Python version
+Code should run on Python >=3.7.
+
+## Parallel computing
+All the code for parallelization requires a HPC SLURM job system. Specifics may need to be worked 
+out in the case of large dataset handling.
 
 # Setup
 
-[//]: # (## Setup with conda)
-
-[//]: # (*For the script*)
-
-[//]: # ()
-[//]: # (```bash)
-
-[//]: # (conda install -c open3d-admin open3d==0.9.0)
-
-[//]: # (conda install -c anaconda scipy)
-
-[//]: # (conda install -c anaconda pandas)
-
-[//]: # (conda install -c anaconda networkx)
-
-[//]: # (conda install -c conda-forge matplotlib)
-
-[//]: # (pip install pymatreader)
-
-[//]: # (conda install -c anaconda numpy)
-
-[//]: # (conda install -c conda-forge opencv)
-
-[//]: # (pip install imageio #use pip here to avoid conflict)
-
-[//]: # (conda install -c conda-forge jupyterlab)
-
-[//]: # (pip install pycpd)
-
-[//]: # (pip install cython)
-
-[//]: # (git clone https://github.com/gattia/cycpd)
-
-[//]: # (cd cycpd)
-
-[//]: # (sudo python setup.py install)
-
-[//]: # (pip install bresenham)
-
-[//]: # (conda install scikit-image)
-
-[//]: # (conda install -c conda-forge scikit-learn )
-
-[//]: # (pip install Shapely)
-
-[//]: # (pip install tqdm)
-
-[//]: # (pip install dropbox)
-
-[//]: # (pip install imageio-ffmpeg)
-
-[//]: # (```)
-
-[//]: # (<!-- - conda install -c anaconda ipykernel -->)
-
-[//]: # ()
-[//]: # (*For nice display*)
-
-[//]: # (```bash)
-
-[//]: # (conda install -c conda-forge ipympl)
-
-[//]: # (conda install -c conda-forge nodejs)
-
-[//]: # (conda install -c conda-forge/label/gcc7 nodejs)
-
-[//]: # (conda install -c conda-forge/label/cf201901 nodejs)
-
-[//]: # (conda install -c conda-forge/label/cf202003 nodejs)
-
-[//]: # (jupyter labextension install @jupyter-widgets/jupyterlab-manager)
-
-[//]: # (jupyter lab build)
-
-[//]: # (```)
-
-useful jupyterlab extensions:
-https://github.com/jpmorganchase/jupyter-fs
 
 ## Setup for Linux
+Installation should take less than 1 hour.
 
 ### Setting up environment
 
@@ -176,11 +107,13 @@ USER_ID=
 
 To have access to a path: 
 Always import from the util.sys
-# Example notebook
+
+# Demo notebooks
 Example of code showing network manipulation is provided in `test_network.ipynb`. It requires 
- test data that can be downloaded at 10.6084/m9.figshare.23902032 to run.
+ test data that can be downloaded [here](10.6084/m9.figshare.23902032) to run.
 The data folders must be stored at the following path:
-**storage_path** + "**test**".
+**storage_path** + "**test**". It should plot a small AMF network and display typical methods
+to access graph nodes and edges. It should run in less than 2 minutes.
 
 Example of code generating the panels of figure 2
 is provided in `test_analysis.ipynb`.
@@ -189,7 +122,7 @@ It requires the datatable made available
 `PATH_ANALYSIS` 
 should be updated to povide the path to the 
 root folder where this data can be unzipped.
-
+It should run in less than 30 minutes.
 
 
 # Presentation of the repository
