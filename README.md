@@ -145,6 +145,7 @@ Copy font in your environment fonts. Example on snellius "/gpfs/home2/cbisot/min
 /site-packages/matplotlib/mpl-data/fonts/ttf/lucidasansdemibold.ttf"
 
 The code should be modified in order to avoid failure in case the font is not present.
+
 ### Local.env file
 
 Create a text file named `local.env` in the base folder
@@ -152,6 +153,9 @@ Create a text file named `local.env` in the base folder
 
 And fill the file with the following lines and adapt them to your situation:
 
+All dropbox related fields can be filled with arbitrary strings. They are not necessary to the core functionning of the code but filling it is necessary for correct import of dependencies.
+
+```
 DATA_PATH=C:\Users\coren\Documents\PhD\Code\data_info.json
 FIJI_PATH=C:\Users\coren\Documents\PhD\Code\fiji-win64\Fiji.app/ImageJ-win64.exe
 TEMP_PATH=C:\Users\coren\Documents\PhD\Code\temp
@@ -168,55 +172,15 @@ APP_SECRET=
 REFRESH_TOKEN = 
 FOLDER_ID=
 USER_ID= 
+
 ```
 
 To have access to a path: 
 Always import from the util.sys
-### Formattage
-
-Le formatage du code est fait avec `black`
 
 # Presentation of the repository
-## Logging
-### Intro
-For logging, the logging module `logging` enables to add logging messages across code and set the level of verbosity.
-There are 4 levels of verbosity (DEBUG, INFO, WARNING, ERROR). Each log line is of one of this types.
-Examples: 
-```python
-logger.info("Processing is done")
-logger.warning("Couldn't handle all cases")
-```
-### 1/ Adding logging to a file
-To add logging to a file we use:
 
-``` python
-import logging
-import os
-logger = logging.getLogger(os.path.basename(__file__))
-```
-This creates a logger with the name of the file.
-### 2/ Setting log level
-- The general log level (verbosity) can be set in the general \_\_init\_\_.py file.
-By changing the line
-```
-logging.basicConfig(stream=sys.stdout, level=logging.INFO, format=log_format)
-```
-
-- A filter can also be added to change log level from a specific files or from a specific module.
-```
-some_logger = logging.getLogger("name_of_the_file")
-some_logger.setLevel(logging.WARNING)
-```
-
-- The log level can also be changed directly in a file with:
-```python
-logger.setLevel("INFO")
-```
-
-### 3/ Remarks
-
-In a certain file, `logging.info("something")` will also work but will display "root" as the name of the logger and not the name of the file that issued the log
-
+##p
 ## Tests
 
 ### 1/ Generality
@@ -258,13 +222,6 @@ The tests can be safely run even if to test/ directory is present.
 Some tests create and save plots in the **test** directory.
 These files don't accumulate (they are just replace at each test).
 
-### 4/ Getting test coverage
-The coverage gives an idea of the portion of code which is covered by the tests.
-
-Getting test coverage:
-`coverage run -m unittest discover`
-`coverage report -m`
-(https://coverage.readthedocs.io/en/6.3.2/)
 
 
 ## Coordinates
@@ -278,11 +235,3 @@ As a result:
 - we write coordinates as `[x, y]`
 - np.arrays have the shape (dim_x, dim_y) and can be shown with plt.imshow()
 - to access a coordinate in an image we use `im[x][y]`
-
-CAREFUL: the following coordinate usage have a different convention:
-- coordinates with Loreto microscope joystick: x and y are inversed (x is for the long horizontal axis)
-- image coordinates in the fiji tile file: x and y are inversed (x is for the long horizontal axis)
-- plt.plot() uses a different convention. We will always have to inverse coordinates when using plt.plot
-Ex: plt.plot(x[1], x[0], ..)
-- cv.resize takes the shape reversed compared to numpy
-- labelme also uses inversed x and y
