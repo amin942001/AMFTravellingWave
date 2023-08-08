@@ -205,4 +205,4 @@ As a result:
 
 # Model simulations
 
-Notebooks generating the figure for model simulations can be found at https://github.com/Cocopyth/model_integration. Proper installation of requirement.txt should be sufficient to run all the notebooks.
+Notebooks generating the figure for model simulations can be found at https://github.com/Cocopyth/model_integration. Proper installation of requirement.txt via `pip install -r requirement.txt` should be sufficient to run all the notebooks.
