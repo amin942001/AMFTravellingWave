@@ -191,7 +191,6 @@ Some tests create and save plots in the **test** directory.
 These files don't accumulate (they are just replace at each test).
 
 
-
 ##Note on coordinates
 
 The general choice of coordinates is:
@@ -203,3 +202,7 @@ As a result:
 - we write coordinates as `[x, y]`
 - np.arrays have the shape (dim_x, dim_y) and can be shown with plt.imshow()
 - to access a coordinate in an image we use `im[x][y]`
+
+# Model simulations
+
+Notebooks generating the figure for model simulations can be found at https://github.com/Cocopyth/model_integration. Proper installation of requirement.txt should be sufficient to run all the notebooks.
