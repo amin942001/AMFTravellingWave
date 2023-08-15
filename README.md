@@ -70,7 +70,8 @@ For better display:
 To run from the base folder:
 (will run the setup.py script)
 `pip install -e .`
-###Install the font for plotting purposes
+
+### Install the font for plotting purposes
 Copy font in your environment fonts. Example on snellius "/gpfs/home2/cbisot/miniconda3/envs/amftrack/lib/python3.7
 /site-packages/matplotlib/mpl-data/fonts/ttf/lucidasansdemibold.ttf"
 
