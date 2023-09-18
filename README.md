@@ -70,11 +70,6 @@ For better display:
 To run from the base folder:
 (will run the setup.py script)
 `pip install -e .`
-###Install the font for plotting purposes
-Copy font in your environment fonts. Example on snellius "/gpfs/home2/cbisot/miniconda3/envs/amftrack/lib/python3.7
-/site-packages/matplotlib/mpl-data/fonts/ttf/lucidasansdemibold.ttf"
-
-The code should be modified in order to avoid failure in case the font is not present.
 
 ### Local.env file
 
@@ -191,7 +186,6 @@ Some tests create and save plots in the **test** directory.
 These files don't accumulate (they are just replace at each test).
 
 
-
 ##Note on coordinates
 
 The general choice of coordinates is:
@@ -203,3 +197,7 @@ As a result:
 - we write coordinates as `[x, y]`
 - np.arrays have the shape (dim_x, dim_y) and can be shown with plt.imshow()
 - to access a coordinate in an image we use `im[x][y]`
+
+# Model simulations
+
+Notebooks generating the figure for model simulations can be found at https://github.com/Cocopyth/model_integration. Proper installation of requirement.txt via `pip install -r requirement.txt` should be sufficient to run all the notebooks.
