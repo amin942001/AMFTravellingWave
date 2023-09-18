@@ -4,7 +4,7 @@ networkx
 matplotlib
 pymatreader
 numpy
-python-opencv
+opencv-python
 # https://stackoverflow.com/questions/57427233/module-cv2-cv2-has-no-attribute-ximgproc
 imageio
 jupyterlab
