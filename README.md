@@ -105,7 +105,7 @@ Always import from the util.sys
 
 # Demo notebooks
 Example of code showing network manipulation is provided in `test_network.ipynb`. It requires 
- test data that can be downloaded [here](http://m9.figshare.23902032) to run.
+ test data that can be downloaded [here](https://figshare.com/articles/dataset/Untitled_Item/23902032) to run.
 The data folders must be stored at the following path:
 **storage_path** + "**test**". It should plot a small AMF network and display typical methods
 to access graph nodes and edges. It should run in less than 2 minutes.
@@ -113,7 +113,7 @@ to access graph nodes and edges. It should run in less than 2 minutes.
 Example of code generating the panels of figure 2
 is provided in `test_analysis.ipynb`.
 It requires the datatable made available 
-[here](http://m9.figshare.23902035).
+[here](https://figshare.com/articles/dataset/Example_of_post_processed_analysis_data_folder/23902035).
 `PATH_ANALYSIS` 
 should be updated to povide the path to the 
 root folder where this data can be unzipped.
@@ -176,7 +176,7 @@ pytest test_file.py -k test_function
 
 ### Special tests
 For some tests, a processed plate is required. Or other types of files.
-Such test data can be downloaded at 10.6084/m9.figshare.23902032 .
+Such test data can be downloaded at [this link](https://figshare.com/articles/dataset/Untitled_Item/23902032) .
 The data folders must be stored at the following path:
 **storage_path** + "**test**".
 If the data is not present, the tests will be skipped.
