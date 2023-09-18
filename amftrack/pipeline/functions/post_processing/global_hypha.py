@@ -6,7 +6,6 @@ from amftrack.pipeline.functions.post_processing.util import (
     is_in_study_zone,
 )
 import numpy as np
-from amftrack.notebooks.analysis.util import *
 
 pixel_conversion_factor = 1.725
 import networkx as nx

@@ -7,7 +7,6 @@ import logging
 from random import choice
 from amftrack.pipeline.functions.image_processing.experiment_util import get_dimX_dimY
 
-from amftrack.notebooks.analysis.util import *
 from amftrack.util.aliases import coord, coord_int
 from amftrack.pipeline.functions.image_processing.experiment_class_surf import (
     Experiment,

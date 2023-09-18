@@ -6,7 +6,6 @@ import pandas as pd
 from scipy import spatial, stats
 from shapely.geometry import Polygon, Point
 
-from amftrack.notebooks.analysis.util import splitPolygon, get_time
 from amftrack.pipeline.functions.post_processing.util import is_in_study_zone
 from amftrack.util.sys import temp_path
 import os

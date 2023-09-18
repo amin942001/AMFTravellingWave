@@ -11,7 +11,6 @@ from amftrack.pipeline.functions.post_processing.area_hulls_util import *
 from amftrack.pipeline.functions.post_processing.util import (
     is_in_study_zone,
 )
-from amftrack.notebooks.analysis.util import get_time, splitPolygon
 from amftrack.util.sys import temp_path
 import numpy as np
 import pandas as pd
