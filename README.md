@@ -105,7 +105,7 @@ Always import from the util.sys
 
 # Demo notebooks
 Example of code showing network manipulation is provided in `test_network.ipynb`. It requires 
- test data that can be downloaded [here](/m9.figshare.23902032) to run.
+ test data that can be downloaded [here](http://m9.figshare.23902032) to run.
 The data folders must be stored at the following path:
 **storage_path** + "**test**". It should plot a small AMF network and display typical methods
 to access graph nodes and edges. It should run in less than 2 minutes.
@@ -113,7 +113,7 @@ to access graph nodes and edges. It should run in less than 2 minutes.
 Example of code generating the panels of figure 2
 is provided in `test_analysis.ipynb`.
 It requires the datatable made available 
-[here](/m9.figshare.23902035).
+[here](http://m9.figshare.23902035).
 `PATH_ANALYSIS` 
 should be updated to povide the path to the 
 root folder where this data can be unzipped.
