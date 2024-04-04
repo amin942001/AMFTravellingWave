@@ -539,12 +539,12 @@ def load_graphs(exp, directory, indexes=None, reload=True, post_process=False,su
         directory_name = get_dirname(date, exp.folders)
         path_snap = exp.directory + directory_name
         if labeled:
-            suffix = "/Analysis/nx_graph_pruned_labeled.p"
+            path_suffix = "/Analysis/nx_graph_pruned_labeled.p"
         else:
-            suffix = f"/Analysis/nx_graph_pruned{suffix}.p"
+            path_suffix = f"/Analysis/nx_graph_pruned{suffix}.p"
         if post_process:
-            suffix = "/Analysis/nx_graph_pruned_labeled2.p"
-        path_save = path_snap + suffix
+            path_suffix = "/Analysis/nx_graph_pruned_labeled2.p"
+        path_save = path_snap + path_suffix
         if (reload and index in indexes) or (exp.nx_graph is None):
             (g, pos) = pickle.load(open(path_save, "rb"))
         else:
