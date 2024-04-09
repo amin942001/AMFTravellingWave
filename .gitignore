@@ -28,3 +28,6 @@ venv
 *.jupyter/
 amftrack/notebooks/HFSP_paper/figures/
 amftrack/notebooks/HFSP_paper/video/
+
+build
+.DS_Store
