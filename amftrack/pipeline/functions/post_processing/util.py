@@ -3,7 +3,9 @@ from amftrack.pipeline.functions.image_processing.experiment_class_surf import (
     Edge,
 )
 import numpy as np
+from shapely.geometry import Point
 
+from amftrack.pipeline.functions.post_processing.extract_study_zone import load_ROI
 
 def measure_length_um(seg):
     pixel_conversion_factor = 1.725
@@ -72,3 +74,16 @@ def is_in_study_zone(node, t, radius, dist, is_circle=False):
 
 def is_in_circle(pos, center, radius):
     return np.linalg.norm(pos - center) <= radius
+
+def is_in_ROI(exp, pos):
+    point = Point(pos[1], pos[0])
+    if not hasattr(exp, "ROI"):
+        load_ROI(exp)
+    is_within_polygon = point.within(exp.ROI)
+    return is_within_polygon
+
+
+def is_in_ROI_node(node, t):
+    exp = node.experiment
+    pos = node.pos(t)
+    return is_in_ROI(exp, pos)

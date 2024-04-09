@@ -18,6 +18,7 @@ from amftrack.util.geometry import (
     get_bounding_box,
     expand_bounding_box,
     is_in_bounding_box,
+    create_polygon,
 )
 from amftrack.util.plot import crop_image, make_random_color
 from amftrack.util.image_analysis import extract_inscribed_rotated_image
@@ -42,6 +43,8 @@ from amftrack.util.sparse import dilate_coord_list
 from amftrack.util.other import is_in
 import geopandas as gpd
 import matplotlib as mpl
+from scipy.optimize import minimize
+from shapely import affinity
 
 
 def get_random_edge(exp: Experiment, t=0) -> Edge:
@@ -1110,3 +1113,129 @@ def plot_hulls_skelet(exp, t, hulls, save_path="", close=True):
         # _ = ax.plot(np.array(y)/5,np.array(x)/5)
     if save_path != "":
         plt.savefig(save_path)
+
+def make_full_image(
+    exp: Experiment,
+    t: int,
+    region=None,
+    edges: List[Edge] = [],
+    points: List[coord_int] = [],
+    video_num: List[int] = [],
+    segments: List[List[coord_int]] = [],
+    nodes: List[Node] = [],
+    downsizing=5,
+    dilation=1,
+    save_path="",
+    prettify=False,
+    with_point_label=False,
+    figsize=(12, 8),
+    dpi=None,
+    node_size=5,
+) -> None:
+    """
+    This is the general purpose function to plot the full image or a region `region` of the image at
+    any given timestep t. The region being specified in the GENERAL coordinates.
+    The image can be downsized by a chosen factor `downsized` with additionnal features such as: edges, nodes, points, segments.
+    The coordinates for all the objects are provided in the GENERAL referential.
+
+    :param region: choosen region in the full image, such as [[100, 100], [2000,2000]], if None the full image is shown
+    :param edges: list of edges to plot, it is the pixel list that is plotted, not a straight line
+    :param nodes: list of nodes to plot (only nodes in the `region` will be shown)
+    :param points: points such as [123, 234] to plot with a red cross on the image
+    :param segments: plot lines between two points that are provided
+    :param downsizing: factor by which we reduce the image resolution (5 -> image 25 times lighter)
+    :param dilation: only for edges: thickness of the edges (dilation applied to the pixel list)
+    :param save_path: full path to the location where the plot will be saved
+    :param prettify: if True, the image will be enhanced by smoothing the intersections between images
+    :param with_point_label: if True, the index of the point is ploted on top of it
+
+    NB: the full region of a full image is typically [[0, 0], [26000, 52000]]
+    NB: the interesting region of a full image is typically [[12000, 15000], [26000, 35000]]
+    NB: the colors are chosen randomly for edges
+    NB: giving a smaller region greatly increase computation time
+    """
+
+    # TODO(FK): fetch image size from experiment object here, and use it in reconstruct image
+    # TODO(FK): colors for edges are not consistent
+    # NB: possible other parameters that could be added: alpha between layers, colors for object, figure_size
+    DIM_X, DIM_Y = get_dimX_dimY(exp)
+
+    if region == None:
+        # Full image
+        image_coodinates = exp.image_coordinates[t]
+        region = get_bounding_box(image_coodinates)
+        region[1][0] += DIM_X  # TODO(FK): Shouldn't be hardcoded
+        region[1][1] += DIM_Y
+
+    # 1/ Image layer
+    im, f = reconstruct_image_from_general(
+        exp,
+        t,
+        downsizing=downsizing,
+        region=region,
+        prettify=prettify,
+        white_background=False,  # TODO(FK): add image dimention here dimx = ..
+    )
+    f_int = lambda c: f(c).astype(int)
+    new_region = [
+        f_int(region[0]),
+        f_int(region[1]),
+    ]  # should be [[0, 0], [d_x/downsized, d_y/downsized]]
+
+    # 2/ Edges layer
+    skel_im, _ = reconstruct_skeletton(
+        [edge.pixel_list(t) for edge in edges],
+        region=region,
+        color_seeds=[(edge.begin.label + edge.end.label) % 255 for edge in edges],
+        downsizing=downsizing,
+        dilation=dilation,
+    )
+    return (im, skel_im)
+
+def get_ROI(exp, t):
+    downsize = 1000
+    im, skel_im = make_full_image(exp, t, downsizing=downsize, dilation=5, edges=[])
+    image = (im).astype(np.uint8)
+
+    scale_unit = 1 / 1.725
+
+    # Compute overlap
+    def compute_overlap(params):
+        x, y, angle = params
+        polygon, R, t = create_polygon(x, y, angle, scale_unit)
+
+        # Draw the polygon on a black image
+        polygon_img = np.zeros_like(image)
+        cv2.fillPoly(polygon_img, [polygon], 255)
+        # Compute overlap between the image and the polygon
+        overlap = np.sum((image / 255) * (polygon_img / 255))
+        # Return negative overlap as we're using the minimize function
+        return -overlap
+
+    # Initial guess for the parameters
+    deltas = np.array([20, 20, 30])
+    init_params = [10, 30, 270]
+    simplex = [init_params]
+    for i in range(len(init_params)):
+        new_point = np.copy(init_params)
+        new_point[i] += deltas[i]
+        simplex.append(new_point)
+
+    # Convert to numpy array for use in scipy.minimize
+    initial_simplex = np.array(simplex)
+    # Bounds for the parameters ([x_min, x_max], [y_min, y_max], [angle_min, angle_max], [scale_min, scale_max])
+
+    # Perform optimization to minimize overlap
+    result = minimize(
+        compute_overlap,
+        init_params,
+        method="Nelder-Mead",
+        options={"initial_simplex": initial_simplex},
+    )
+    optimal_params = result.x
+
+    # Draw the optimized polygon on the image
+    vertices, angle, translation_vector = create_polygon(*optimal_params, scale_unit)
+    polygon = Polygon(vertices)
+    polygon = affinity.scale(polygon, xfact=downsize, yfact=downsize, origin=(0, 0))
+    return polygon

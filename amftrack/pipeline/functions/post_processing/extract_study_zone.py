@@ -11,6 +11,9 @@ import os
 from time import time
 import imageio
 import scipy
+import json
+from amftrack.pipeline.functions.image_processing.experiment_util import get_ROI
+from shapely.geometry import shape
 
 # old function to automatically extract center, should be restarted from scratch
 # def find_center_orth(directory, row):
@@ -398,3 +401,26 @@ def save_study_zone(exp):
     exp.orthog = np.save(f"{exp.save_location}/orthog.npy", exp.orthog)
     # exp.reach_out = np.load(f"{exp.save_location}/reach_out.npy")
     # exp.num_trunk = np.load(f"{exp.save_location}/num_trunk.npy")
+
+def save_ROI(exp):
+    dirName = exp.save_location
+    ROI = get_ROI(exp, 0)
+    polygon_geojson = ROI.__geo_interface__
+    path_ROI = os.path.join(dirName, "ROI.geojson")
+    # Save the GeoJSON to a file
+    with open(path_ROI, "w") as geojson_file:
+        json.dump(polygon_geojson, geojson_file)
+
+
+def load_ROI(exp):
+    dirName = exp.save_location
+    path_ROI = os.path.join(dirName, "ROI.geojson")
+
+    has_ROI = os.path.isfile(path_ROI)
+    if not has_ROI:
+        save_ROI(exp)
+    with open(path_ROI, "r") as geojson_file:
+        polygon_geojson = json.load(geojson_file)
+    polygon = shape(polygon_geojson)
+    exp.ROI = polygon
+    return 
