@@ -254,32 +254,32 @@ def update_plate_info(
     with tqdm(total=len(listdir), desc="analysed") as pbar:
         for folder in listdir:
             path_snap = os.path.join(directory, folder)
-            if os.path.exists(os.path.join(path_snap, "Img")):
-                sub_list_files = os.listdir(os.path.join(path_snap, "Img"))
-                is_real_folder = os.path.isfile(os.path.join(path_snap, "param.m"))
-                if strong_constraint:
-                    is_real_folder *= (
-                        os.path.isfile(
-                            os.path.join(path_snap, "Img", "Img_r03_c05.tif")
-                        )
-                        * len(sub_list_files)
-                        >= 100
+            # if os.path.exists(os.path.join(path_snap, "Img")):
+            # sub_list_files = os.listdir(os.path.join(path_snap, "Img"))
+            is_real_folder = os.path.isfile(os.path.join(path_snap, "param.m"))
+            if strong_constraint:
+                is_real_folder *= (
+                    os.path.isfile(
+                        os.path.join(path_snap, "Img", "Img_r03_c05.tif")
                     )
-                if is_real_folder:
-                    params = get_param(folder, directory)
-                    ss = folder.split("_")[0]
-                    ff = folder.split("_")[1]
-                    date = datetime(
-                        year=int(ss[:4]),
-                        month=int(ss[4:6]),
-                        day=int(ss[6:8]),
-                        hour=int(ff[0:2]),
-                        minute=int(ff[2:4]),
-                    )
-                    params["date"] = datetime.strftime(date, "%d.%m.%Y, %H:%M:")
-                    params["folder"] = folder
-                    total_path = os.path.join(directory, folder)
-                    plate_info[total_path] = params
+                    * len(sub_list_files)
+                    >= 100
+                )
+            if is_real_folder:
+                params = get_param(folder, directory)
+                ss = folder.split("_")[0]
+                ff = folder.split("_")[1]
+                date = datetime(
+                    year=int(ss[:4]),
+                    month=int(ss[4:6]),
+                    day=int(ss[6:8]),
+                    hour=int(ff[0:2]),
+                    minute=int(ff[2:4]),
+                )
+                params["date"] = datetime.strftime(date, "%d.%m.%Y, %H:%M:")
+                params["folder"] = folder
+                total_path = os.path.join(directory, folder)
+                plate_info[total_path] = params
             pbar.update(1)
     with open(target, "w") as jsonf:
         json.dump(plate_info, jsonf, indent=4)
